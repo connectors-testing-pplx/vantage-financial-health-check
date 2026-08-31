@@ -1,0 +1,9 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Dataset question or discrepancy
+    url: https://www.acma.gov.au/radiocomms-licence-data
+    about: >-
+      This repository republishes row-level extracts from the official ACMA
+      Register of Radiocommunications Licences (RRL). For questions about the
+      underlying data itself (not this repository's formatting), see the
+      official ACMA RRL data page linked above.
