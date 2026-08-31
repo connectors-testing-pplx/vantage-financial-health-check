@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: vantage-financial-health-check
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run prod
+    envVars:
+      - key: NODE_VERSION
+        value: 20.14.0
+      - key: NEXT_PUBLIC_BASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_GA4_ID
+        sync: false
+      - key: NEXT_PUBLIC_CLARITY_ID
+        sync: false
+      - key: NEXT_PUBLIC_META_PIXEL_ID
+        sync: false
+      - key: HUBSPOT_PORTAL_ID
+        sync: false
+      - key: HUBSPOT_FORM_ID
+        sync: false
+      - key: LEADS_DIR
+        value: /opt/render/project/src/data
