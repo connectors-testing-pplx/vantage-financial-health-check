@@ -28,22 +28,28 @@ export default function LeadCapture({ result }: { result: AssessmentResult }) {
     }
     setStatus("submitting");
     setError("");
+    const demo = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE || "";
     try {
-      const res = await fetch("/api/submit-lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          overall: result.overall,
-          pillars: result.pillars.map((p) => ({
-            name: p.name,
-            score: p.score,
-            band: p.band,
-          })),
-          recommendations: result.recommendations.map((r) => r.text),
-        }),
-      });
-      if (!res.ok) throw new Error("Submission failed");
+      if (demo) {
+        await new Promise((r) => setTimeout(r, 800));
+      } else {
+        const res = await fetch(`${apiBase}/api/submit-lead`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...form,
+            overall: result.overall,
+            pillars: result.pillars.map((p) => ({
+              name: p.name,
+              score: p.score,
+              band: p.band,
+            })),
+            recommendations: result.recommendations.map((r) => r.text),
+          }),
+        });
+        if (!res.ok) throw new Error("Submission failed");
+      }
       trackEvent("lead_submitted", { overall: result.overall, meetingType: form.meetingType });
       setStatus("done");
     } catch {
